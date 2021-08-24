@@ -1,7 +1,7 @@
 {
   "name": "fetch-switcher",
   "version": "0.0.1",
-  "description": "An utility dispatching to multiple implementation of fetch depending on the URL scheme",
+  "description": "An utility dispatching to multiple implementation of fetch() depending on the URL scheme",
   "keywords": [
     "fetch",
     "http",
