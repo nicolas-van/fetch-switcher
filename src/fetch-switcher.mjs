@@ -3,7 +3,7 @@
  * A function builder that will return a function able to dispatch to multiple fetch() implementations.
  *
  * @param {object} schemes An object where each
- * @returns {string} test
+ * @returns {Function} A new fetch() function that will dispatch to
  * @example
  * import { fetchSwitcher } from 'fetch-switcher'
  *
@@ -30,8 +30,46 @@
 function fetchSwitcher (schemes) {
   // TODO
   return (resource, init) => {
-    return schemes[''](resource, init)
+    const str = (() => {
+      if (_isRequest(resource)) {
+        return resource.url
+      } else {
+        return `${resource}`
+      }
+    })()
+    const impl = (() => {
+      const found = str.match(/^(\w+):.*$/)
+      if (found) {
+        return schemes[found[1]] || schemes['']
+      } else {
+        return schemes['']
+      }
+    })()
+    return impl(resource, init)
   }
 }
 
 export { fetchSwitcher }
+
+/**
+ * @ignore
+ * @param {any} obj ignore
+ * @returns {any} ignore
+ */
+function _isRequest (obj) {
+  if (
+    obj &&
+    obj.method !== undefined &&
+    obj.url !== undefined &&
+    obj.headers !== undefined &&
+    obj.redirect !== undefined &&
+    obj.signal !== undefined &&
+    obj.clone !== undefined
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export { _isRequest }
