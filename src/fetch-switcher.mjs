@@ -2,8 +2,11 @@
 /**
  * A function builder that will return a function able to dispatch to multiple fetch() implementations.
  *
- * @param {object} schemes An object where each
- * @returns {Function} A new fetch() function that will dispatch to
+ * @param {object} schemes An object where each key correspond to an URL scheme and each value to the
+ * fetch() implementation that correspond. The empty string ('') is the default fetch() implementation
+ * that will be used for all unknown URL schemes.
+ * @returns {Function} A new fetch() function that will dispatch to one of the implementations based
+ * on the URL scheme of the resource URL.
  * @example
  * import { fetchSwitcher } from 'fetch-switcher'
  *
