@@ -8,4 +8,4 @@ function fetchSwitcher () {
   return 'hello'
 }
 
-export default fetchSwitcher
+export { fetchSwitcher }
