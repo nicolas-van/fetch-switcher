@@ -2,6 +2,7 @@
 import { expect, test } from '@jest/globals'
 import { fetchSwitcher, _isRequest } from './fetch-switcher.mjs'
 import { Request } from 'cross-fetch'
+import { Request as NodeFetchRequest } from 'node-fetch'
 
 test('uses default', () => {
   const fetchDefault = () => {
@@ -19,6 +20,7 @@ test('_isRequest', () => {
   expect(_isRequest('hello')).toBe(false)
   expect(_isRequest(new URL('http://example.com'))).toBe(false)
   expect(_isRequest(new Request('http://example.com'))).toBe(true)
+  expect(_isRequest(new NodeFetchRequest('http://example.com'))).toBe(true)
 })
 
 test('string', () => {
